@@ -1,0 +1,7 @@
+http://localhost:8000/accounts/signup/
+http://localhost:8000/admin
+
+下記で管理者作成
+python manage.py createsuperuser 
+user : admin
+pass:master012

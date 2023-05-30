@@ -1,0 +1,91 @@
+{% extends "base.html" %}
+{% load django_bootstrap5 %}
+
+{% block main %}
+<div class="index">
+    <h1 class="title">Welcome to Kaiko DataBase</h1>
+    <p class="subtitle">あなたの知見を共有しましょう</p>
+    <a class="btn btn-warning" href="{% url 'snippet_new' %}">積算案件を新しく作成する</a>
+</div>
+<!--
+<form method="get">
+    {{ form.as_p }}
+    <button type="submit">検索</button>
+</form>
+-->
+<form method="get">
+    <ul>
+        {{ form.as_ul }}
+    </ul>
+    
+    <button type="submit">検索</button>
+</form>
+
+{% if results %}
+    <h2>検索結果</h2>
+    <table class="table table-bordered table-striped table-hover ">
+        <thead>
+        <tr>
+            <th>投稿者</th>
+            <th>投稿日</th>
+            <th>担当事業所</th>
+            <th>進捗状況</th>
+            <th>工事件名</th>
+            <th>受付日</th>
+            <th>積算締切日</th>
+        </tr>
+        </thead>
+    <ul>
+    <tbody>
+        {% for result in results %}
+        <tr>
+            <th>{{ result.created_by.username }}</th>
+            <th>{{ result.created_at }}</th>
+            <th>{{ result.language }}</th>
+            <th>{{ result.status }}</th>
+            <th><a href="{% url 'snippet_detail' result.pk %}">{{ result.title}}</a></th>
+            <th>{{ result.accept_date }}</th>
+            <th>{{ result.duedate }}</th>
+        </tr>
+    {% endfor %}
+    </tbody>
+    </ul>
+{% else %}
+    <p>検索結果はありません。</p>
+{% endif %}
+
+{% if snippets %}
+<table class="table table-bordered table-hover ">
+    <thead>
+    <tr>
+        <th>投稿者</th>
+        <th>投稿日</th>
+        <th>担当事業所</th>
+        <th>進捗状況</th>
+        <th>工事件名</th>
+        <th>受付日</th>
+        <th>積算締切日</th>
+    </tr>
+    </thead>
+
+    <tbody>
+        {% for snippet in snippets %}
+            
+            <tr {% if snippet.status|stringformat:"s" == "案件完了" %} class="table-dark-row" {% endif %} >
+                <th>{{ snippet.created_by.username }}</th>
+                <th>{{ snippet.created_at }}</th>
+                <th>{{ snippet.language }}</th>
+                <th>{{ snippet.status }}</th>
+                <th><a href="{% url 'snippet_detail' snippet.id %}">{{ snippet.title }}</a></th>
+                <th>{{ snippet.accept_date }}</th>
+                <th>{{ snippet.duedate }}</th>
+            </tr>
+        {% endfor %}
+    </tbody>
+
+</table>
+{% else %}
+<p>積算ポイントはまだ投稿されていません。</p>
+{% endif %}  
+
+{% endblock %}

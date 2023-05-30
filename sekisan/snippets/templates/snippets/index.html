@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% load django_bootstrap5 %}
+
+{% block main %}
+
+<div class="index">
+    <h1 class="title">Welcome to Kaiko DataBase</h1>
+    <p class="subtitle">あなたの知見を共有しましょう</p>
+</div>
+
+<body>
+    <h1>メニュー</h1>
+    <ul>
+        <a href="{% url 'top' %}">
+            <button type="button" class="btn btn-primary btn-lg">工事案件一覧</button></a>
+        <p align="left">積算案件の進捗を管理しているページ<br>
+        ご覧ください</p>
+
+        <a href="{% url 'top2' %}">
+            <button type="button" class="btn btn-success btn-lg">ポイント集</button></a>
+        </a>
+        <p align="left">積算実施時のポイント集です</p>
+    </ul>
+</body>
+</html>
+{% endblock %}

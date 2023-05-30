@@ -1,0 +1,15 @@
+<!doctype html>
+<html>
+        <head>
+        </head>
+        <body>
+            <a href="{% url 'test_app:index' %}">トップ</a>
+            <br>
+
+            <form enctype="multipart/form-data" action="{% url 'test_app:new_file' %}" method="POST">
+                {% csrf_token %}
+                {{ form }}
+                <button type="submit">保存</button>
+            </form>
+        </body>
+</html>

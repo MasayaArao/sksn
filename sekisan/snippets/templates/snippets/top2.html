@@ -1,0 +1,74 @@
+{% extends "base.html" %}
+
+{% block main %}
+<div class="index2">
+    <h1 class="title">Welcome to Kaiko DataBase</h1>
+    <p class="subtitle">あなたの知見を共有しましょう</p>
+    <a class="btn btn-info" href="{% url 'snippet_new2' %}">積算のポイントを作成する</a>
+</div>
+
+
+<form method="get">
+    {{ form.as_p }}
+    <button type="submit">検索</button>
+</form>
+    
+{% if results %}
+    <h2>検索結果</h2>
+    <table class="table table-bordered table-striped table-hover ">
+        <thead>
+        <tr>
+            <th>投稿者</th>
+            <th>投稿日</th>
+            <th>タイトル</th>
+        </tr>
+        </thead>
+    <ul>
+    {% for result in results %}
+    <tr>
+        <th>{{ result.created_by.username }}</th>
+        <th>{{ result.created_at }}</th>
+        <th><a href="{% url 'snippet_detail2' result.pk %}">{{ result.title}}</a></th>
+    </tr>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>検索結果はありません。</p>
+{% endif %}
+
+
+{% if snippets %}
+<table class="table table-bordered table-hover ">
+    <thead>
+    <tr>
+        <th>投稿者</th>
+        <th>投稿日</th>
+        <th>タイトル</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for snippet in snippets %}
+    <tr>
+        <th>{{ snippet.created_by.username }}</th>
+        <th>{{ snippet.created_at }}</th>
+        <th><a href="{% url 'snippet_detail2' snippet.id %}">{{ snippet.title }}</a></th>
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>
+{% else %}
+<p>積算ポイントはまだ投稿されていません。</p>
+{% endif %}
+
+{% if searchForm %}<!-- searchFormがあれば -->
+<form action='{% url "top2" %}' method="get"><!-- getメソッドでインデックス関数を呼び出す -->
+    <div>
+        {{ searchForm }}<!-- views.pyから受け取ったsearchFormを表示 -->
+        <input type="submit" value="検索">
+        <a href='{% url "top2" %}'>クリア</a><!-- postメソッドでインデックス関数を呼び出す -->
+    </div>
+</form>
+{% endif %}
+
+
+{% endblock %}

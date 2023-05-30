@@ -1,0 +1,17 @@
+<!doctype html>
+<html>
+        <head>
+                <title>テストアプリ</title>
+        </head>
+        <body>
+                <a href="{% url 'test_app:new_file' %}">ファイルのアップロード</a>
+                 <br>
+
+                <h2>ダウンロードファイル一覧</h2>
+                <br>
+
+                {% for file in file_obj %}
+                    <p><a href="{{ file.upload.url }}">{{ file.upload.name }}</a></p>
+                {% endfor %}
+        </body>
+</html>
